@@ -1,4 +1,4 @@
-# SQL
+# SQL insights
 Hi  
 Insights from an Insurance database
 
