@@ -29,9 +29,9 @@ With overall_avg as
 select region,round(Avg(charges),2) Avg_chrgs
 from insurance,overall_avg
 group by region
-Having Avg_chrgs <Avg(charges);
+Having Avg(charges) < avg_chrgs 
 
--- Ans southeast & notheast
+-- Ans northwest & southwest
 
 
 -- 5. What can you say about people with children and those without children in terms of smoking
@@ -85,4 +85,4 @@ sex,round(avg(charges),0)
 from insurance
 where sex="female"
 
--- Ans 12569.58
+-- Ans 12570	
