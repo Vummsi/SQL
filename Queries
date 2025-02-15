@@ -1,0 +1,88 @@
+SELECT * FROM insurance;
+
+-- How many female are smokers?
+select
+count(*) as Count
+from insurance
+where sex= "female" and smoker="yes";
+-- Ans-115 
+-- 2. How many male are smokers?
+select
+count(*) as Count
+from insurance
+where sex= "male" and smoker="yes";
+-- Ans-159
+
+-- 3. Show the distribution of smokers and non smokers in each region 
+select
+region,smoker,Count(*) Count
+from insurance
+group by region,smoker;
+
+-- 4. Is there a region where its average charge is below the overall average charge?
+
+With overall_avg as 
+(	SELECT Avg(charges) overall_avg_charges
+	FROM insurance
+)
+
+select region,round(Avg(charges),2) Avg_chrgs
+from insurance,overall_avg
+group by region
+Having Avg_chrgs <Avg(charges);
+
+-- Ans southeast & notheast
+
+
+-- 5. What can you say about people with children and those without children in terms of smoking
+
+with children as (
+select *
+from insurance
+where children>0 and smoker="yes"
+)
+select region,sex,smoker,count(*) Cnt
+from children
+group by region,sex,smoker
+order by Cnt desc
+Limit 10;
+
+with no_children as (
+select *
+from insurance	
+where children=0 and smoker="yes"
+)
+select region,sex,smoker,count(*) Cnt
+from no_children
+group by region,sex,smoker
+order by Cnt desc
+Limit 10;
+
+-- 6. Which region has the highest number of smokers?
+
+select 
+region,count(*) cnt
+from insurance
+where smoker="yes"
+group by region
+order by cnt Desc
+Limit 1;
+-- Ans southeast region
+
+-- 7. Which region has the lowest number of smokers?
+select region, count(*) cnt
+from insurance
+where smoker="yes"
+group by region
+order by cnt
+Limit 1;
+-- Ans - southwest region
+
+
+-- 8. What is the average charge from female?
+select 
+sex,round(avg(charges),0)
+from insurance
+where sex="female"
+
+-- Ans 12569.58
